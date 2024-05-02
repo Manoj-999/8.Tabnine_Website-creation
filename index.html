@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pizza Booking</title>
+<style>
+  body {
+    background-color: black;
+    color: white;
+    font-family: Arial, sans-serif;
+  }
+  .container {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 20px;
+  }
+  .pizza-option, .toppings, .payment-info {
+    margin-bottom: 20px;
+  }
+  label, .total-price, .eta {
+    display: block;
+    margin-bottom: 10px;
+  }
+  input, select, button {
+    padding: 10px;
+    margin-bottom: 10px;
+    width: 100%;
+  }
+  button {
+    background-color: #ff4500;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  .success-message {
+    color: #00FF00;
+    font-size: 20px;
+    text-align: center;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <h2>Order Your Pizza</h2>
+  <div class="pizza-option">
+    <label for="pizza">Choose your pizza:</label>
+    <select id="pizza">
+      <option value="10">Margherita - $10</option>
+      <option value="12">Pepperoni - $12</option>
+      <option value="15">Vegetarian - $15</option>
+    </select>
+  </div>
+  <div class="toppings">
+    <label>Toppings ($2 each):</label>
+    <input type="checkbox" id="cheese" value="2"> Cheese<br>
+    <input type="checkbox" id="mushrooms" value="2"> Mushrooms<br>
+    <input type="checkbox" id="peppers" value="2"> Peppers<br>
+  </div>
+  <div class="payment-info">
+    <label>Payment Information:</label>
+    <input type="text" placeholder="Card Name">
+    <input type="text" placeholder="Card Number" maxlength="16">
+    <input type="text" placeholder="CCV" maxlength="3">
+    <input type="month">
+  </div>
+  <button onclick="placeOrder()">Place Order</button>
+  <div class="total-price"></div>
+  <div class="eta"></div>
+  <div class="success-message"></div>
+</div>
+
+<script>
+function placeOrder() {
+  let basePrice = parseInt(document.getElementById('pizza').value);
+  let toppings = 0;
+  if (document.getElementById('cheese').checked) toppings += 2;
+  if (document.getElementById('mushrooms').checked) toppings += 2;
+  if (document.getElementById('peppers').checked) toppings += 2;
+  
+  let totalPrice = basePrice + toppings;
+  let tax = totalPrice * 0.1; // Assuming 10% tax
+  let finalPrice = totalPrice + tax;
+  
+  document.querySelector('.total-price').textContent = `Total Price (including tax): $${finalPrice.toFixed(2)}`;
+  document.querySelector('.eta').textContent = `Estimated delivery time: ${Math.floor(Math.random() * 60) + 10} minutes`;
+  
+  document.querySelector('.success-message').textContent = 'Order placed successfully!';
+}
+</script>
+</body>
+</html>
